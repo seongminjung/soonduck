@@ -4,7 +4,7 @@
     <arg name="file" default="$(find sd_simulation)/description/$(arg filename)" />
     
     <!-- Use the file argument as the name of the file used to set the /robot_description parameter on the parameter server -->
-    <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg file)" />
+    <param name="robot_description" command="$(find xacro)/xacro $(arg file)" />
 
     <!-- Run the robot_state_publisher. -->
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" />
