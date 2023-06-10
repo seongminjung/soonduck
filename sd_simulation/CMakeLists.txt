@@ -9,6 +9,7 @@ project(sd_simulation)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  rviz
 )
 
 ## System dependencies are found with CMake's conventions
