@@ -6,13 +6,13 @@
 
     <xacro:include filename="body.xacro" />
 
-    <xacro:include filename="$(find gazebo_plugins)/test/multi_robot_scenario/xacro/laser/hokuyo.xacro" />
+    <!-- <xacro:include filename="$(find gazebo_plugins)/test/multi_robot_scenario/xacro/laser/hokuyo.xacro" />
     <xacro:laser name="lidar" parent="chassis"
         xyz="0 0 0.2" rpy="0 0 0" 
-        meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/laser" />
+        meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/laser" /> -->
     
-    <!-- <xacro:include filename="lidar.xacro"/>
-    <xacro:include filename="camera.xacro"/>
+    <xacro:include filename="lidar.xacro"/>
+    <!-- <xacro:include filename="camera.xacro"/>
 
     <xacro:if value="$(arg use_ros2_control)">
         <xacro:include filename="ros2_control.xacro" />
