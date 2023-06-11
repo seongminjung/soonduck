@@ -25,6 +25,9 @@
     <!-- Spawn a robot into Gazebo -->
     <node name="gazebo_spawn_model" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model soonduck" />
 
+    <!-- Run the keyboard driver -->
+    <node name="keyboard_driver_node" pkg="sd_keyboard_driver" type="keyboard_driver_node.py" output="screen" />
+
     <!-- Load joint controller configurations from YAML file to parameter server -->
     <!-- <rosparam file="$(find sd_simulation)/config/ros_control.yaml" command="load"/> -->
 
