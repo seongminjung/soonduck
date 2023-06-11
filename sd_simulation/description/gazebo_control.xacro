@@ -29,7 +29,9 @@
             <publishOdom>true</publishOdom>
             <publishOdomTF>true</publishOdomTF>
             <publishWheelJointState>true</publishWheelJointState>
-            <wheelAcceleration>0</wheelAcceleration>
+            <wheelAcceleration>1.8</wheelAcceleration>
+            <wheelDeceleration>5.0</wheelDeceleration>
+            <!-- <wheelSpeedTolerance>0.05</wheelSpeedTolerance> -->
             <wheelTorque>5</wheelTorque>
             <updateRate>100</updateRate>
             <odometrySource>encoder</odometrySource>
