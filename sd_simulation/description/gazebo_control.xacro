@@ -30,11 +30,9 @@
             <publishOdomTF>true</publishOdomTF>
             <publishWheelJointState>true</publishWheelJointState>
             <wheelAcceleration>1.8</wheelAcceleration>
-            <wheelDeceleration>5.0</wheelDeceleration>
-            <!-- <wheelSpeedTolerance>0.05</wheelSpeedTolerance> -->
             <wheelTorque>5</wheelTorque>
             <updateRate>100</updateRate>
-            <odometrySource>encoder</odometrySource>
+            <odometrySource>world</odometrySource>
     
         </plugin>
     </gazebo>
