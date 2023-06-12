@@ -29,7 +29,8 @@ class DetectBall3d():
         rospy.set_param("h_fov",1.089)
         rospy.set_param("ball_radius",0.033)
         rospy.set_param("aspect_ratio",4.0/3.0)
-        rospy.set_param("camera_frame",'front_cam_link')
+        rospy.set_param("camera_frame",'front_cam_link_optical')
+        # Use dummy front_cam_link_optical frame just to match coordinates with the camera frame
 
         self.h_fov = rospy.get_param('h_fov')
         self.v_fov = self.h_fov/rospy.get_param('aspect_ratio')

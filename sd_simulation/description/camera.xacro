@@ -20,13 +20,13 @@
     - transforming from the standard ROS robot orientation (x-forward, y-left, z-up)
     to the standard optical orientation (x-right, y-down, z-forward). -->
 
-    <!-- <link name="front_cam_link_optical"/>
+    <link name="front_cam_link_optical"/>
 
     <joint name="front_cam_optical_joint" type="fixed">
         <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
         <parent link="front_cam_link" />
         <child link="front_cam_link_optical" />
-    </joint> -->
+    </joint>
 
     <gazebo reference="front_cam_link">
         <material>Gazebo/Red</material>
