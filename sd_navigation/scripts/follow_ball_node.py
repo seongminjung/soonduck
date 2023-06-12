@@ -47,13 +47,13 @@ class FollowBall():
     def timer_callback(self, event=None):
         msg = Twist()
         if (time.time() - self.lastrcvtime < self.rcv_timeout_secs):
-            rospy.loginfo('Target: {}'.format(self.target_val))
-            print(self.target_dist)
+            rospy.logdebug('Target: {}'.format(self.target_val))
+            rospy.logdebug('Distance: {}'.format(self.target_dist))
             if (self.target_dist < self.max_size_thresh):
                 msg.linear.x = self.forward_chase_speed
             msg.angular.z = -self.angular_chase_multiplier*self.target_val
         else:
-            rospy.loginfo('Target lost')
+            rospy.logdebug('Target lost')
             msg.angular.z = self.search_angular_speed
         self.cmd_vel_pub.publish(msg)
 

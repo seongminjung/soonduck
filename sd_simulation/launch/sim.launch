@@ -34,6 +34,9 @@
     <node name="detect_ball_node" pkg="sd_perception" type="detect_ball_node.py" output="screen" />
     <node name="detect_ball_3d_node" pkg="sd_perception" type="detect_ball_3d_node.py" output="screen" />
 
+    <!-- Run ball following node -->
+    <node name="follow_ball_node" pkg="sd_navigation" type="follow_ball_node.py" output="screen" />
+
     <!-- Load joint controller configurations from YAML file to parameter server -->
     <!-- <rosparam file="$(find sd_simulation)/config/ros_control.yaml" command="load"/> -->
 
