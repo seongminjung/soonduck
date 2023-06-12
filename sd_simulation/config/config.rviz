@@ -79,6 +79,10 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        front_cam_link_optical:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         left_wheel:
           Alpha: 1
           Show Axes: false
@@ -115,6 +119,8 @@ Visualization Manager:
           Value: true
         front_cam_link:
           Value: true
+        front_cam_link_optical:
+          Value: true
         left_wheel:
           Value: true
         lidar:
@@ -136,7 +142,8 @@ Visualization Manager:
               caster_wheel:
                 {}
             front_cam_link:
-              {}
+              front_cam_link_optical:
+                {}
             left_wheel:
               {}
             lidar:
@@ -175,7 +182,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /front_cam/image_raw
+      Image Topic: /detect_ball/image_out
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -184,6 +191,14 @@ Visualization Manager:
       Queue Size: 2
       Transport Hint: raw
       Unreliable: false
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /detect_ball/ball_3d_marker
+      Name: Marker
+      Namespaces:
+        "": true
+      Queue Size: 100
       Value: true
   Enabled: true
   Global Options:
@@ -231,7 +246,7 @@ Visualization Manager:
       Near Clip Distance: 0.009999999776482582
       Pitch: 0.48039889335632324
       Target Frame: <Fixed Frame>
-      Yaw: 0.8603977560997009
+      Yaw: 0.8653977513313293
     Saved: ~
 Window Geometry:
   Displays:
@@ -251,5 +266,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1200
-  X: 559
-  Y: 377
+  X: 2620
+  Y: 141
