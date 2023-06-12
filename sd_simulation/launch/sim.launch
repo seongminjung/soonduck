@@ -30,6 +30,10 @@
     <!-- Run the keyboard driver -->
     <node name="keyboard_driver_node" pkg="sd_keyboard_driver" type="keyboard_driver_node.py" output="screen" />
 
+    <!-- Run ball detection node -->
+    <node name="detect_ball_node" pkg="sd_perception" type="detect_ball_node.py" output="screen" />
+    <node name="detect_ball_3d_node" pkg="sd_perception" type="detect_ball_3d_node.py" output="screen" />
+
     <!-- Load joint controller configurations from YAML file to parameter server -->
     <!-- <rosparam file="$(find sd_simulation)/config/ros_control.yaml" command="load"/> -->
 

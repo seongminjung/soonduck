@@ -20,7 +20,7 @@ import math
 class DetectBall3d():
 
     def __init__(self):
-        rospy.loginfo('Detecting in 3D')
+        rospy.loginfo('3D Ball Detecting initialized')
 
         self.ball2d_sub = rospy.Subscriber("/detect_ball/detected_ball", Point, self.ball_rcv_callback)
         self.ball3d_pub = rospy.Publisher("/detect_ball/detected_ball_3d", Point, queue_size=1)
@@ -78,7 +78,6 @@ class DetectBall3d():
         m.color.a = 1.0
 
         self.ball_marker_pub.publish(m)
-        print(m.pose.position)
 
 
 if __name__ == '__main__':

@@ -216,7 +216,7 @@ def no_op(x):
 class DetectBall():
 
     def __init__(self):
-        rospy.loginfo('Looking for the ball...')
+        rospy.loginfo('2D Ball Detecting initialized')
 
         rospy.set_param('~tuning_mode', False) # ~ since it is a private param (it is put inside a node)
         rospy.set_param('x_min', 0)
@@ -286,8 +286,6 @@ class DetectBall():
                 x = kp.pt[0]
                 y = kp.pt[1]
                 s = kp.size
-
-                rospy.loginfo(f"Pt {i}: ({x},{y},{s})")
 
                 if (s > point_out.z):                    
                     point_out.x = x
