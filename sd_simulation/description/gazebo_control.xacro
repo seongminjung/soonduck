@@ -20,7 +20,7 @@
 
             <!-- Output -->
             <odometryFrame>odom</odometryFrame>
-            <robotBaseFrame>chassis</robotBaseFrame>
+            <robotBaseFrame>base_link</robotBaseFrame>
 
             <!-- Others -->
             <rosDebugLevel>Debug</rosDebugLevel>

@@ -5,15 +5,15 @@
 
     <link name="base_link"/>
 
-    <!-- BODY LINK -->
+    <!-- CHASSIS LINK -->
 
-    <joint name="body_joint" type="fixed">
+    <joint name="chassis_joint" type="fixed">
         <parent link="base_link"/>
-        <child link="body"/>
+        <child link="chassis"/>
         <origin xyz="-0.1 0 0"/>
     </joint>
 
-    <link name="body">
+    <link name="chassis">
         <visual>
             <origin xyz="0.15 0 0.075"/>
             <geometry>
@@ -34,7 +34,7 @@
     </link>
 
     <!-- Color for Gazebo -->
-    <gazebo reference="body">
+    <gazebo reference="chassis">
         <material>Gazebo/White</material>
     </gazebo>
 
@@ -101,7 +101,7 @@
     <!-- CASTER WHEEL LINK -->
 
     <joint name="caster_wheel_joint" type="fixed">
-        <parent link="body"/>
+        <parent link="chassis"/>
         <child link="caster_wheel"/>
         <origin xyz="0.24 0 0"/>
     </joint>
