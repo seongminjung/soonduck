@@ -14,8 +14,8 @@
 
     <!-- Run Gazebo -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <!-- <arg name="world_name" value="$(find sd_simulation)/worlds/obstacles.world"/> -->
-        <arg name="world_name" value="$(find vehicle_sim)/worlds/gazebo_world_description/worlds/mcity.world"/>
+        <arg name="world_name" value="$(find sd_simulation)/worlds/obstacles.world"/>
+        <!-- <arg name="world_name" value="$(find vehicle_sim)/worlds/gazebo_world_description/worlds/mcity.world"/> -->
         <!-- <arg name="world_name" value="$(find vehicle_sim)/worlds/gazebo_world_description/worlds/citysim_gazebo9.world"/> -->
         <arg name="paused" value="false"/>
         <arg name="use_sim_time" value="true"/>
