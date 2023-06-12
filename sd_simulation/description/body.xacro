@@ -19,6 +19,7 @@
             <geometry>
                 <box size="0.3 0.3 0.15"/>
             </geometry>
+            <!-- Color for RVIZ -->
             <material name="white"/>
         </visual>
         <collision>
@@ -32,6 +33,7 @@
         </xacro:inertial_box>
     </link>
 
+    <!-- Color for Gazebo -->
     <gazebo reference="body">
         <material>Gazebo/White</material>
     </gazebo>
@@ -50,7 +52,7 @@
             <geometry>
                 <cylinder radius="0.05" length="0.04"/>
             </geometry>
-            <material name="blue"/>
+            <material name="yellow"/>
         </visual>
         <collision>
             <geometry>
@@ -63,7 +65,7 @@
     </link>
 
     <gazebo reference="left_wheel">
-        <material>Gazebo/Blue</material>
+        <material>Gazebo/Wood</material>
     </gazebo>
 
     <!-- RIGHT WHEEL LINK -->
@@ -80,7 +82,7 @@
             <geometry>
                 <cylinder radius="0.05" length="0.04"/>
             </geometry>
-            <material name="blue"/>
+            <material name="yellow"/>
         </visual>
         <collision>
             <geometry>
@@ -93,7 +95,7 @@
     </link>
 
     <gazebo reference="right_wheel">
-        <material>Gazebo/Blue</material>
+        <material>Gazebo/Wood</material>
     </gazebo>
 
     <!-- CASTER WHEEL LINK -->
