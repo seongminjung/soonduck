@@ -12,40 +12,20 @@ FORWARD = "w"
 BACKWARD = "s"
 LEFT = "a"
 RIGHT = "d"
-UP = "2"
-DOWN = "x"
-
-ROLL_LEFT = "j"
-ROLL_RIGHT = "l"
-PITCH_UP = "i"
-PITCH_DOWN = "k"
-YAW_LEFT = "h"
-YAW_RIGHT = ";"
 
 HELP = "p"
 
 HELP_MSG = """
-Use keyboard to control ROV
+Use keyboard to control SoonDuck
 
 Key Bindings:
-   [2]
-   [w]            [i]
-[a][s][d]   [h][j][k][l][;]
-   [x]
+   [w]
+[a][s][d]
 
 [w] = Forward
 [s] = Backward
 [a] = Left
 [d] = Right
-[2] = Up
-[x] = Down
-
-[j] = Roll Left
-[l] = Roll Right
-[i] = Pitch Up
-[k] = Pitch Down
-[h] = Yaw Left
-[;] = Yaw Right
 
 [p] = Show this help"""
 
@@ -59,14 +39,6 @@ class KeyboardDriverNode():
             "backward": False,
             "left": False,
             "right": False,
-            "up": False,
-            "down": False,
-            "roll_left": False,
-            "roll_right": False,
-            "pitch_up": False,
-            "pitch_down": False,
-            "yaw_left": False,
-            "yaw_right": False,
         }
 
     def on_press(self, key: Optional[Union[Key, KeyCode]]):
@@ -84,22 +56,6 @@ class KeyboardDriverNode():
                 self.status["left"] = True
             if key == RIGHT:
                 self.status["right"] = True
-            if key == UP:
-                self.status["up"] = True
-            if key == DOWN:
-                self.status["down"] = True
-            if key == ROLL_LEFT:
-                self.status["roll_left"] = True
-            if key == ROLL_RIGHT:
-                self.status["roll_right"] = True
-            if key == PITCH_UP:
-                self.status["pitch_up"] = True
-            if key == PITCH_DOWN:
-                self.status["pitch_down"] = True
-            if key == YAW_LEFT:
-                self.status["yaw_left"] = True
-            if key == YAW_RIGHT:
-                self.status["yaw_right"] = True
             if key == HELP:
                 rospy.loginfo(HELP_MSG)
 
@@ -127,22 +83,6 @@ class KeyboardDriverNode():
                 self.status["left"] = False
             if key == RIGHT:
                 self.status["right"] = False
-            if key == UP:
-                self.status["up"] = False
-            if key == DOWN:
-                self.status["down"] = False
-            if key == ROLL_LEFT:
-                self.status["roll_left"] = False
-            if key == ROLL_RIGHT:
-                self.status["roll_right"] = False
-            if key == PITCH_UP:
-                self.status["pitch_up"] = False
-            if key == PITCH_DOWN:
-                self.status["pitch_down"] = False
-            if key == YAW_LEFT:
-                self.status["yaw_left"] = False
-            if key == YAW_RIGHT:
-                self.status["yaw_right"] = False
 
             self.pub_twist()
 
@@ -152,11 +92,7 @@ class KeyboardDriverNode():
     def pub_twist(self):
         msg = Twist()
         msg.linear.x = (self.status["forward"] - self.status["backward"])
-        msg.linear.y = (self.status["left"] - self.status["right"])
-        msg.linear.z = (self.status["up"] - self.status["down"])
-        msg.angular.x = (self.status["roll_left"] - self.status["roll_right"])
-        msg.angular.y = (self.status["pitch_up"] - self.status["pitch_down"])
-        msg.angular.z = (self.status["yaw_left"] - self.status["yaw_right"])
+        msg.angular.z = (self.status["left"] - self.status["right"])
         self.cmd_vel_publisher.publish(msg)
 
 
