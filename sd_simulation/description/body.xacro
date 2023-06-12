@@ -5,15 +5,15 @@
 
     <link name="base_link"/>
 
-    <!-- CHASSIS LINK -->
+    <!-- BODY LINK -->
 
-    <joint name="chassis_joint" type="fixed">
+    <joint name="body_joint" type="fixed">
         <parent link="base_link"/>
-        <child link="chassis"/>
+        <child link="body"/>
         <origin xyz="-0.1 0 0"/>
     </joint>
 
-    <link name="chassis">
+    <link name="body">
         <visual>
             <origin xyz="0.15 0 0.075"/>
             <geometry>
@@ -32,10 +32,10 @@
         </xacro:inertial_box>
     </link>
 
-    <gazebo reference="chassis">
+    <gazebo reference="body">
         <material>Gazebo/White</material>
     </gazebo>
-    
+
     <!-- LEFT WHEEL LINK -->
 
     <joint name="left_wheel_joint" type="continuous">
@@ -99,11 +99,10 @@
     <!-- CASTER WHEEL LINK -->
 
     <joint name="caster_wheel_joint" type="fixed">
-        <parent link="base_link"/>
+        <parent link="body"/>
         <child link="caster_wheel"/>
         <origin xyz="0.24 0 0"/>
     </joint>
-
 
     <link name="caster_wheel">
         <visual>
