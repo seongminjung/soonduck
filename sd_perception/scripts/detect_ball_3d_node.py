@@ -67,6 +67,13 @@ class DetectBall3d():
         m.id = 0
         m.type = Marker.SPHERE
         m.action = Marker.ADD
+
+        # Default values
+        m.pose.orientation.x = 0.0
+        m.pose.orientation.y = 0.0
+        m.pose.orientation.z = 0.0
+        m.pose.orientation.w = 1.0
+
         m.pose.position.x = x
         m.pose.position.y = y
         m.pose.position.z = z
