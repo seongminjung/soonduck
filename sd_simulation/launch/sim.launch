@@ -14,7 +14,9 @@
 
     <!-- Run Gazebo -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find sd_simulation)/worlds/obstacles.world"/>
+        <!-- <arg name="world_name" value="$(find sd_simulation)/worlds/obstacles.world"/> -->
+        <arg name="world_name" value="$(find vehicle_sim)/worlds/gazebo_world_description/worlds/mcity.world"/>
+        <!-- <arg name="world_name" value="$(find vehicle_sim)/worlds/gazebo_world_description/worlds/citysim_gazebo9.world"/> -->
         <arg name="paused" value="false"/>
         <arg name="use_sim_time" value="true"/>
         <arg name="gui" value="true"/>
@@ -23,7 +25,7 @@
     </include>
 
     <!-- Spawn a robot into Gazebo -->
-    <node name="gazebo_spawn_model" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model soonduck" />
+    <node name="gazebo_spawn_model" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model soonduck -z 1" />
 
     <!-- Run the keyboard driver -->
     <node name="keyboard_driver_node" pkg="sd_keyboard_driver" type="keyboard_driver_node.py" output="screen" />
