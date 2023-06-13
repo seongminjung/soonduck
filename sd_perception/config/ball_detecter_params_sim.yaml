@@ -17,4 +17,4 @@ detect_ball_3d:
   h_fov: 1.089
   ball_radius: 0.033
   aspect_ratio: 1.333
-  camera_frame: "camera_link_optical"
+  camera_frame: "front_cam_link_optical"
