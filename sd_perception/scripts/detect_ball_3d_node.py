@@ -26,16 +26,11 @@ class DetectBall3d():
         self.ball3d_pub = rospy.Publisher("/detect_ball/detected_ball_3d", Point, queue_size=1)
         self.ball_marker_pub = rospy.Publisher("/detect_ball/ball_3d_marker", Marker, queue_size=1)
 
-        rospy.set_param("h_fov",1.089)
-        rospy.set_param("ball_radius",0.033)
-        rospy.set_param("aspect_ratio",4.0/3.0)
-        rospy.set_param("camera_frame",'front_cam_link_optical')
+        self.h_fov = rospy.get_param('detect_ball_3d/h_fov')
+        self.v_fov = self.h_fov/rospy.get_param('detect_ball_3d/aspect_ratio')
+        self.ball_radius = rospy.get_param('detect_ball_3d/ball_radius')
+        self.camera_frame = rospy.get_param('detect_ball_3d/camera_frame')
         # Use dummy front_cam_link_optical frame just to match coordinates with the camera frame
-
-        self.h_fov = rospy.get_param('h_fov')
-        self.v_fov = self.h_fov/rospy.get_param('aspect_ratio')
-        self.ball_radius = rospy.get_param('ball_radius')
-        self.camera_frame = rospy.get_param('camera_frame')
 
 
     def ball_rcv_callback(self, data:Point):

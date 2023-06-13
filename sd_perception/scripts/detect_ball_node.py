@@ -217,35 +217,21 @@ class DetectBall():
 
     def __init__(self):
         rospy.loginfo('2D Ball Detecting initialized')
-
-        rospy.set_param('~tuning_mode', False) # ~ since it is a private param (it is put inside a node)
-        rospy.set_param('x_min', 0)
-        rospy.set_param('x_max', 100)
-        rospy.set_param('y_min', 32)
-        rospy.set_param('y_max', 100)
-        rospy.set_param("h_min", 23)
-        rospy.set_param("h_max", 57)
-        rospy.set_param("s_min", 0)
-        rospy.set_param("s_max", 255)
-        rospy.set_param("v_min", 0)
-        rospy.set_param("v_max", 255)
-        rospy.set_param("sz_min", 0)
-        rospy.set_param("sz_max", 100)
         
-        self.tuning_mode = rospy.get_param('~tuning_mode')
+        self.tuning_mode = rospy.get_param('detect_ball/tuning_mode')
         self.tuning_params = {
-            'x_min': rospy.get_param('x_min'),
-            'x_max': rospy.get_param('x_max'),
-            'y_min': rospy.get_param('y_min'),
-            'y_max': rospy.get_param('y_max'),
-            'h_min': rospy.get_param('h_min'),
-            'h_max': rospy.get_param('h_max'),
-            's_min': rospy.get_param('s_min'),
-            's_max': rospy.get_param('s_max'),
-            'v_min': rospy.get_param('v_min'),
-            'v_max': rospy.get_param('v_max'),
-            'sz_min': rospy.get_param('sz_min'),
-            'sz_max': rospy.get_param('sz_max')
+            'x_min': rospy.get_param('detect_ball/x_min'),
+            'x_max': rospy.get_param('detect_ball/x_max'),
+            'y_min': rospy.get_param('detect_ball/y_min'),
+            'y_max': rospy.get_param('detect_ball/y_max'),
+            'h_min': rospy.get_param('detect_ball/h_min'),
+            'h_max': rospy.get_param('detect_ball/h_max'),
+            's_min': rospy.get_param('detect_ball/s_min'),
+            's_max': rospy.get_param('detect_ball/s_max'),
+            'v_min': rospy.get_param('detect_ball/v_min'),
+            'v_max': rospy.get_param('detect_ball/v_max'),
+            'sz_min': rospy.get_param('detect_ball/sz_min'),
+            'sz_max': rospy.get_param('detect_ball/sz_max')
         }
 
         self.bridge = CvBridge()

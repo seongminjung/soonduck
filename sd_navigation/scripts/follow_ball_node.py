@@ -20,19 +20,13 @@ import time
 class FollowBall():
 
     def __init__(self):
-        rospy.set_param("rcv_timeout_secs", 1.0)
-        rospy.set_param("angular_chase_multiplier", 0.7)
-        rospy.set_param("forward_chase_speed", 0.1)
-        rospy.set_param("search_angular_speed", 0.5)
-        rospy.set_param("max_size_thresh", 0.1)
-        rospy.set_param("filter_value", 0.9)
 
-        self.rcv_timeout_secs = rospy.get_param('rcv_timeout_secs')
-        self.angular_chase_multiplier = rospy.get_param('angular_chase_multiplier')
-        self.forward_chase_speed = rospy.get_param('forward_chase_speed')
-        self.search_angular_speed = rospy.get_param('search_angular_speed')
-        self.max_size_thresh = rospy.get_param('max_size_thresh')
-        self.filter_value = rospy.get_param('filter_value')
+        self.rcv_timeout_secs = rospy.get_param('follow_ball/rcv_timeout_secs')
+        self.angular_chase_multiplier = rospy.get_param('follow_ball/angular_chase_multiplier')
+        self.forward_chase_speed = rospy.get_param('follow_ball/forward_chase_speed')
+        self.search_angular_speed = rospy.get_param('follow_ball/search_angular_speed')
+        self.max_size_thresh = rospy.get_param('follow_ball/max_size_thresh')
+        self.filter_value = rospy.get_param('follow_ball/filter_value')
 
         timer_period = 0.1  # seconds
         self.timer = rospy.Timer(rospy.Duration(timer_period), self.timer_callback)
