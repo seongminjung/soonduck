@@ -21,6 +21,7 @@ class FollowBall():
 
     def __init__(self):
 
+        self.enable = rospy.get_param('follow_ball/enable')
         self.rcv_timeout_secs = rospy.get_param('follow_ball/rcv_timeout_secs')
         self.angular_chase_multiplier = rospy.get_param('follow_ball/angular_chase_multiplier')
         self.forward_chase_speed = rospy.get_param('follow_ball/forward_chase_speed')
@@ -49,7 +50,10 @@ class FollowBall():
         else:
             rospy.logdebug('Target lost')
             msg.angular.z = self.search_angular_speed
-        self.cmd_vel_pub.publish(msg)
+
+        self.enable = rospy.get_param('follow_ball/enable') # Refresh the enable parameter
+        if self.enable:
+            self.cmd_vel_pub.publish(msg)
 
 
     def listener_callback(self, msg):

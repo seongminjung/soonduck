@@ -13,6 +13,8 @@ BACKWARD = "s"
 LEFT = "a"
 RIGHT = "d"
 
+TOGGLE_BALL_TRACKING = "b"
+
 HELP = "p"
 
 HELP_MSG = """
@@ -26,6 +28,8 @@ Key Bindings:
 [s] = Backward
 [a] = Left
 [d] = Right
+
+[b] = Toggle ball tracking
 
 [p] = Show this help"""
 
@@ -56,6 +60,8 @@ class KeyboardDriverNode():
                 self.status["left"] = True
             if key == RIGHT:
                 self.status["right"] = True
+            if key == TOGGLE_BALL_TRACKING:
+                rospy.set_param('follow_ball/enable', not rospy.get_param('follow_ball/enable'))
             if key == HELP:
                 rospy.loginfo(HELP_MSG)
 
