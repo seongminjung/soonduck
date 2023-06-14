@@ -41,6 +41,11 @@
     <!-- Run ball following node -->
     <node name="follow_ball_node" pkg="sd_navigation" type="follow_ball_node.py" output="screen" />
 
+    <!-- Run SLAM -->
+    <node pkg="slam_toolbox" type="async_slam_toolbox_node" name="slam_toolbox" output="screen">
+        <rosparam command="load" file="$(find sd_slam)/config/mapper_params_online_async.yaml" />
+    </node>
+
     <!-- Load joint controller configurations from YAML file to parameter server -->
     <!-- <rosparam file="$(find sd_simulation)/config/ros_control.yaml" command="load"/> -->
 
