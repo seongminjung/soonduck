@@ -17,6 +17,14 @@
         <arg name="world_name" value="$(find sd_simulation)/worlds/obstacles.world"/>
         <!-- <arg name="world_name" value="$(find vehicle_sim)/worlds/gazebo_world_description/worlds/mcity.world"/> -->
         <!-- <arg name="world_name" value="$(find vehicle_sim)/worlds/gazebo_world_description/worlds/citysim_gazebo9.world"/> -->
+        <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_autorace_2020.world"/> -->
+        <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_autorace.world"/> -->
+        <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/> -->
+        <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_stage_1.world"/> -->
+        <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_stage_2.world"/> -->
+        <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_stage_3.world"/> -->
+        <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_stage_4.world"/> -->
+        <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_world.world"/> -->
         <arg name="paused" value="false"/>
         <arg name="use_sim_time" value="true"/>
         <arg name="gui" value="true"/>
