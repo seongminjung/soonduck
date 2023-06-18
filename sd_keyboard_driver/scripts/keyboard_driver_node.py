@@ -1,4 +1,5 @@
 import rospy
+from time import time
 
 from typing import Optional, Union
 
@@ -33,17 +34,23 @@ Key Bindings:
 
 [p] = Show this help"""
 
+LINEAR_ACCEL = 1.8
+ANGULAR_ACCEL = 1.0
 
 class KeyboardDriverNode():
     def __init__(self):
         self.cmd_vel_publisher = rospy.Publisher('cmd_vel', Twist, queue_size=10)
         rospy.loginfo(HELP_MSG)
+        self.prev_msg = Twist()
         self.status = {
-            "forward": False,
-            "backward": False,
-            "left": False,
-            "right": False,
+            "forward": 0,
+            "backward": 0,
+            "left": 0,
+            "right": 0,
         }
+        rospy.Timer(rospy.Duration(0.03), self.pub_twist)
+        self.prev_time = time() - 0.03
+        self.cur_time = time()
 
     def on_press(self, key: Optional[Union[Key, KeyCode]]):
         try:
@@ -53,13 +60,13 @@ class KeyboardDriverNode():
                 key = key.name
 
             if key == FORWARD:
-                self.status["forward"] = True
+                self.status["forward"] = 1
             if key == BACKWARD:
-                self.status["backward"] = True
+                self.status["backward"] = 1
             if key == LEFT:
-                self.status["left"] = True
+                self.status["left"] = 1
             if key == RIGHT:
-                self.status["right"] = True
+                self.status["right"] = 1
             if key == TOGGLE_BALL_TRACKING:
                 rospy.set_param('follow_ball/enable', not rospy.get_param('follow_ball/enable'))
             if key == HELP:
@@ -82,13 +89,13 @@ class KeyboardDriverNode():
                 key = key.name
 
             if key == FORWARD:
-                self.status["forward"] = False
+                self.status["forward"] = 0
             if key == BACKWARD:
-                self.status["backward"] = False
+                self.status["backward"] = 0
             if key == LEFT:
-                self.status["left"] = False
+                self.status["left"] = 0
             if key == RIGHT:
-                self.status["right"] = False
+                self.status["right"] = 0
 
             self.pub_twist()
 
@@ -97,9 +104,24 @@ class KeyboardDriverNode():
 
     def pub_twist(self):
         msg = Twist()
-        msg.linear.x = (self.status["forward"] - self.status["backward"])
-        msg.angular.z = (self.status["left"] - self.status["right"])
+        if self.status["forward"] == 1:
+            msg.linear.x = self.prev_msg.linear.x + LINEAR_ACCEL * (self.cur_time - self.prev_time)
+            if msg.linear.x > 1.0:
+                msg.linear.x = 1.0
+        if self.status["backward"] == 1:
+            msg.linear.x = self.prev_msg.linear.x - LINEAR_ACCEL * (self.cur_time - self.prev_time)
+            if msg.linear.x < -1.0:
+                msg.linear.x = -1.0
+        if self.status["left"] == 1:
+            msg.angular.z = self.prev_msg.angular.z + ANGULAR_ACCEL * (self.cur_time - self.prev_time)
+            if msg.angular.z > 1.0:
+                msg.angular.z = 1.0
+        if self.status["right"] == 1:
+            msg.angular.z = self.prev_msg.angular.z - ANGULAR_ACCEL * (self.cur_time - self.prev_time)
+            if msg.angular.z < -1.0:
+                msg.angular.z = -1.0
         self.cmd_vel_publisher.publish(msg)
+        self.prev_msg = msg
 
 
 if __name__ == '__main__':
