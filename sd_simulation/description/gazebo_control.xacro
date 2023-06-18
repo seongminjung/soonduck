@@ -2,38 +2,25 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <gazebo>
-        <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
-    
-            <!-- Wheel Information -->
-            <leftJoint>left_wheel_joint</leftJoint>
-            <rightJoint>right_wheel_joint</rightJoint>
+        <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+            <updateRate>100.0</updateRate>
+            <leftFrontJoint>front_left_wheel_joint</leftFrontJoint>
+            <rightFrontJoint>front_right_wheel_joint</rightFrontJoint>
+            <leftRearJoint>back_left_wheel_joint</leftRearJoint>
+            <rightRearJoint>back_right_wheel_joint</rightRearJoint>
             <wheelSeparation>0.25</wheelSeparation>
             <wheelDiameter>0.08</wheelDiameter>
+            <robotBaseFrame>base_link</robotBaseFrame>
+            <torque>20</torque>
+            <broadcastTF>true</broadcastTF>
 
-            <!-- Limits -->
-            <maxWheelTorque>200</maxWheelTorque>
-            <maxWheelAcceleration>10.0</maxWheelAcceleration>
-    
-            <!-- Topics -->
             <commandTopic>cmd_vel</commandTopic>
             <odometryTopic>odom</odometryTopic>
-
-            <!-- Output -->
             <odometryFrame>odom</odometryFrame>
-            <robotBaseFrame>base_link</robotBaseFrame>
 
-            <!-- Others -->
-            <rosDebugLevel>Debug</rosDebugLevel>
-            <publishTf>true</publishTf>
-            <publishWheelTF>false</publishWheelTF>
-            <publishOdom>true</publishOdom>
-            <publishOdomTF>true</publishOdomTF>
-            <publishWheelJointState>true</publishWheelJointState>
-            <wheelAcceleration>1.8</wheelAcceleration>
-            <wheelTorque>5</wheelTorque>
-            <updateRate>100</updateRate>
-            <odometrySource>world</odometrySource>
-    
+            <covariance_x>0.0001</covariance_x>
+            <covariance_y>0.0001</covariance_y>
+            <covariance_yaw>0.01</covariance_yaw>
         </plugin>
     </gazebo>
 

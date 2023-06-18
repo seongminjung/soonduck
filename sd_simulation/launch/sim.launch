@@ -54,6 +54,11 @@
         <rosparam command="load" file="$(find sd_slam)/config/mapper_params_online_async.yaml" />
     </node>
 
+    <!-- Run joint staste publisher -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen">
+        <param name="use_gui" value="false"/>
+    </node>
+
     <!-- Load joint controller configurations from YAML file to parameter server -->
     <!-- <rosparam file="$(find sd_simulation)/config/ros_control.yaml" command="load"/> -->
 
