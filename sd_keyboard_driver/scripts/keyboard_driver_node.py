@@ -35,7 +35,7 @@ Key Bindings:
 [p] = Show this help"""
 
 LINEAR_ACCEL = 1.8
-ANGULAR_ACCEL = 1.0
+ANGULAR_ACCEL = 1.8
 
 class KeyboardDriverNode():
     def __init__(self):
@@ -48,8 +48,8 @@ class KeyboardDriverNode():
             "left": 0,
             "right": 0,
         }
-        rospy.Timer(rospy.Duration(0.03), self.pub_twist)
-        self.prev_time = time() - 0.03
+        rospy.Timer(rospy.Duration(0.01), self.pub_twist)
+        self.prev_time = time() - 0.01
         self.cur_time = time()
 
     def on_press(self, key: Optional[Union[Key, KeyCode]]):
@@ -71,8 +71,6 @@ class KeyboardDriverNode():
                 rospy.set_param('follow_ball/enable', not rospy.get_param('follow_ball/enable'))
             if key == HELP:
                 rospy.loginfo(HELP_MSG)
-
-            self.pub_twist()
 
             # Make sure this listener node is destroyed when the node is shutdown
             if rospy.is_shutdown():
@@ -97,30 +95,25 @@ class KeyboardDriverNode():
             if key == RIGHT:
                 self.status["right"] = 0
 
-            self.pub_twist()
-
         except rospy.ROSInterruptException:
             pass
 
-    def pub_twist(self):
+    def pub_twist(self, event=None):
+        self.cur_time = time()
+        des_vel = Twist()
+        des_vel.linear.x = self.status["forward"] - self.status["backward"]
+        des_vel.angular.z = self.status["left"] - self.status["right"]
         msg = Twist()
-        if self.status["forward"] == 1:
+        if des_vel.linear.x > self.prev_msg.linear.x:
             msg.linear.x = self.prev_msg.linear.x + LINEAR_ACCEL * (self.cur_time - self.prev_time)
-            if msg.linear.x > 1.0:
-                msg.linear.x = 1.0
-        if self.status["backward"] == 1:
+        else:
             msg.linear.x = self.prev_msg.linear.x - LINEAR_ACCEL * (self.cur_time - self.prev_time)
-            if msg.linear.x < -1.0:
-                msg.linear.x = -1.0
-        if self.status["left"] == 1:
+        if des_vel.angular.z > self.prev_msg.angular.z:
             msg.angular.z = self.prev_msg.angular.z + ANGULAR_ACCEL * (self.cur_time - self.prev_time)
-            if msg.angular.z > 1.0:
-                msg.angular.z = 1.0
-        if self.status["right"] == 1:
+        else:
             msg.angular.z = self.prev_msg.angular.z - ANGULAR_ACCEL * (self.cur_time - self.prev_time)
-            if msg.angular.z < -1.0:
-                msg.angular.z = -1.0
         self.cmd_vel_publisher.publish(msg)
+        self.prev_time = self.cur_time
         self.prev_msg = msg
 
 
