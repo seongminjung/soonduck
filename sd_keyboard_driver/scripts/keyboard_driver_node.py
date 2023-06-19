@@ -34,7 +34,8 @@ Key Bindings:
 
 [p] = Show this help"""
 
-LINEAR_ACCEL = 1.8
+LINEAR_START_ACCEL = 1.3
+LINEAR_STOP_ACCEL = 1.8
 ANGULAR_ACCEL = 2.5
 
 class KeyboardDriverNode():
@@ -104,15 +105,20 @@ class KeyboardDriverNode():
         des_vel.linear.x = self.status["forward"] - self.status["backward"]
         des_vel.angular.z = self.status["left"] - self.status["right"]
         msg = Twist()
-        if abs(des_vel.linear.x - self.prev_msg.linear.x) > LINEAR_ACCEL * (self.cur_time - self.prev_time):
-            # only when the difference is greater than the acceleration, we will accelerate
-            if des_vel.linear.x > self.prev_msg.linear.x:
-                msg.linear.x = self.prev_msg.linear.x + LINEAR_ACCEL * (self.cur_time - self.prev_time)
+        if des_vel.linear.x > self.prev_msg.linear.x:
+            if abs(des_vel.linear.x - self.prev_msg.linear.x) > LINEAR_START_ACCEL * (self.cur_time - self.prev_time):
+                # only when the difference is greater than the acceleration, we will accelerate
+                msg.linear.x = self.prev_msg.linear.x + LINEAR_START_ACCEL * (self.cur_time - self.prev_time)
             else:
-                msg.linear.x = self.prev_msg.linear.x - LINEAR_ACCEL * (self.cur_time - self.prev_time)
+                # otherwise, we will just set the velocity to the desired velocity directly
+                msg.linear.x = des_vel.linear.x
         else:
-            # otherwise, we will just set the velocity to the desired velocity directly
-            msg.linear.x = des_vel.linear.x
+            if abs(des_vel.linear.x - self.prev_msg.linear.x) > LINEAR_STOP_ACCEL * (self.cur_time - self.prev_time):
+                # only when the difference is greater than the acceleration, we will accelerate
+                msg.linear.x = self.prev_msg.linear.x - LINEAR_STOP_ACCEL * (self.cur_time - self.prev_time)
+            else:
+                # otherwise, we will just set the velocity to the desired velocity directly
+                msg.linear.x = des_vel.linear.x
         if abs(des_vel.angular.z - self.prev_msg.angular.z) > ANGULAR_ACCEL * (self.cur_time - self.prev_time):
             if des_vel.angular.z > self.prev_msg.angular.z:
                 msg.angular.z = self.prev_msg.angular.z + ANGULAR_ACCEL * (self.cur_time - self.prev_time)
