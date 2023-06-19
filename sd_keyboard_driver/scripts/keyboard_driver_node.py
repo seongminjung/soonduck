@@ -34,14 +34,16 @@ Key Bindings:
 
 [p] = Show this help"""
 
-LINEAR_START_ACCEL = 1.3
-LINEAR_STOP_ACCEL = 1.8
+LINEAR_ACCEL = 1.3
+LINEAR_DECEL = 1.8
 ANGULAR_ACCEL = 2.5
+ANGULAR_DECEL = 3.0
 
 class KeyboardDriverNode():
     def __init__(self):
         self.cmd_vel_publisher = rospy.Publisher('cmd_vel', Twist, queue_size=10)
         rospy.loginfo(HELP_MSG)
+        self.des_vel = Twist()
         self.prev_msg = Twist()
         self.status = {
             "forward": 0,
@@ -73,6 +75,9 @@ class KeyboardDriverNode():
             if key == HELP:
                 rospy.loginfo(HELP_MSG)
 
+            self.des_vel.linear.x = self.status["forward"] - self.status["backward"]
+            self.des_vel.angular.z = self.status["left"] - self.status["right"]
+
             # Make sure this listener node is destroyed when the node is shutdown
             if rospy.is_shutdown():
                 return False
@@ -96,36 +101,35 @@ class KeyboardDriverNode():
             if key == RIGHT:
                 self.status["right"] = 0
 
+            self.des_vel.linear.x = self.status["forward"] - self.status["backward"]
+            self.des_vel.angular.z = self.status["left"] - self.status["right"]
+
         except rospy.ROSInterruptException:
             pass
 
     def pub_twist(self, event=None):
         self.cur_time = time()
-        des_vel = Twist()
-        des_vel.linear.x = self.status["forward"] - self.status["backward"]
-        des_vel.angular.z = self.status["left"] - self.status["right"]
+        dt = self.cur_time - self.prev_time
+        dvx = self.des_vel.linear.x - self.prev_msg.linear.x
+        dvz = self.des_vel.angular.z - self.prev_msg.angular.z
+
         msg = Twist()
-        if des_vel.linear.x > self.prev_msg.linear.x:
-            if abs(des_vel.linear.x - self.prev_msg.linear.x) > LINEAR_START_ACCEL * (self.cur_time - self.prev_time):
-                # only when the difference is greater than the acceleration, we will accelerate
-                msg.linear.x = self.prev_msg.linear.x + LINEAR_START_ACCEL * (self.cur_time - self.prev_time)
-            else:
-                # otherwise, we will just set the velocity to the desired velocity directly
-                msg.linear.x = des_vel.linear.x
+        if dvx > LINEAR_ACCEL * dt:
+            # only when the difference is greater than the acceleration, we will accelerate
+            msg.linear.x = self.prev_msg.linear.x + LINEAR_ACCEL * dt
+        elif dvx < -LINEAR_DECEL * dt:
+            msg.linear.x = self.prev_msg.linear.x - LINEAR_DECEL * dt
         else:
-            if abs(des_vel.linear.x - self.prev_msg.linear.x) > LINEAR_STOP_ACCEL * (self.cur_time - self.prev_time):
-                # only when the difference is greater than the acceleration, we will accelerate
-                msg.linear.x = self.prev_msg.linear.x - LINEAR_STOP_ACCEL * (self.cur_time - self.prev_time)
-            else:
-                # otherwise, we will just set the velocity to the desired velocity directly
-                msg.linear.x = des_vel.linear.x
-        if abs(des_vel.angular.z - self.prev_msg.angular.z) > ANGULAR_ACCEL * (self.cur_time - self.prev_time):
-            if des_vel.angular.z > self.prev_msg.angular.z:
-                msg.angular.z = self.prev_msg.angular.z + ANGULAR_ACCEL * (self.cur_time - self.prev_time)
-            else:
-                msg.angular.z = self.prev_msg.angular.z - ANGULAR_ACCEL * (self.cur_time - self.prev_time)
+            # otherwise, we will just set the velocity to the desired velocity directly
+            msg.linear.x = self.des_vel.linear.x
+            
+        if dvz > ANGULAR_ACCEL * dt:
+            msg.angular.z = self.prev_msg.angular.z + ANGULAR_ACCEL * dt
+        elif dvz < -ANGULAR_DECEL * dt:
+            msg.angular.z = self.prev_msg.angular.z - ANGULAR_DECEL * dt
         else:
-            msg.angular.z = des_vel.angular.z
+            msg.angular.z = self.des_vel.angular.z
+
         self.cmd_vel_publisher.publish(msg)
         self.prev_time = self.cur_time
         self.prev_msg = msg
