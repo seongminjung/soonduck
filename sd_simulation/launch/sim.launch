@@ -62,6 +62,22 @@
         <param name="use_gui" value="false"/>
     </node>
 
+    <!-- Add AMCL example for differential drive robots for Localization -->
+    <!-- Subscribe: /soonduck/lidar/scan, /tf, /initialpose, /map -->
+    <!-- Publish: /amcl_pose, /particlecloud, /tf -->
+    <include file="$(find sd_navigation)/launch/amcl_diff.launch" />
+        
+    <!-- Move Base Node -->
+    <!-- Subscribe: /move_base_simple/goal -->
+    <!-- Publish: /cmd_vel -->
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <rosparam file="$(find sd_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find sd_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find sd_navigation)/config/local_costmap_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find sd_navigation)/config/global_costmap_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find sd_navigation)/config/base_local_planner_params.yaml" command="load" />
+    </node>
+
     <!-- Load joint controller configurations from YAML file to parameter server -->
     <!-- <rosparam file="$(find sd_simulation)/config/ros_control.yaml" command="load"/> -->
 
