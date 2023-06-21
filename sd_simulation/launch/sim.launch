@@ -14,12 +14,12 @@
 
     <!-- Run Gazebo -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find sd_simulation)/worlds/obstacles.world"/>
+        <!-- <arg name="world_name" value="$(find sd_simulation)/worlds/obstacles.world"/> -->
         <!-- <arg name="world_name" value="$(find vehicle_sim)/worlds/gazebo_world_description/worlds/mcity.world"/> -->
         <!-- <arg name="world_name" value="$(find vehicle_sim)/worlds/gazebo_world_description/worlds/citysim_gazebo9.world"/> -->
         <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_autorace_2020.world"/> -->
         <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_autorace.world"/> -->
-        <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/> -->
+        <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/>
         <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_stage_1.world"/> -->
         <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_stage_2.world"/> -->
         <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_stage_3.world"/> -->
@@ -33,7 +33,7 @@
     </include>
 
     <!-- Spawn a robot into Gazebo -->
-    <node name="gazebo_spawn_model" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model soonduck -z 1" />
+    <node name="gazebo_spawn_model" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model soonduck -x 0.5 -z 0.1" />
 
     <!-- Run the keyboard driver -->
     <node name="keyboard_driver_node" pkg="sd_keyboard_driver" type="keyboard_driver_node.py" output="screen" />
@@ -53,6 +53,9 @@
     <node pkg="slam_toolbox" type="async_slam_toolbox_node" name="slam_toolbox" output="screen">
         <rosparam command="load" file="$(find sd_slam)/config/mapper_params_online_async.yaml" />
     </node>
+
+    <!-- Run Gmapping SLAM -->
+    <!-- <node pkg="gmapping" type="slam_gmapping" name="gmapping" args="scan:=/soonduck/lidar/scan" /> -->
 
     <!-- Run joint staste publisher -->
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen">
