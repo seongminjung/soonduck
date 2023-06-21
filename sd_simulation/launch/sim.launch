@@ -50,9 +50,9 @@
     <node name="follow_ball_node" pkg="sd_navigation" type="follow_ball_node.py" output="screen" />
 
     <!-- Run SLAM -->
-    <node pkg="slam_toolbox" type="async_slam_toolbox_node" name="slam_toolbox" output="screen">
+    <!-- <node pkg="slam_toolbox" type="async_slam_toolbox_node" name="slam_toolbox" output="screen">
         <rosparam command="load" file="$(find sd_slam)/config/mapper_params_online_async.yaml" />
-    </node>
+    </node> -->
 
     <!-- Run Gmapping SLAM -->
     <!-- <node pkg="gmapping" type="slam_gmapping" name="gmapping" args="scan:=/soonduck/lidar/scan" /> -->
@@ -61,6 +61,12 @@
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen">
         <param name="use_gui" value="false"/>
     </node>
+
+    <!-- Map Server -->
+    <!-- if you want to use fixed map; disable SLAM and remove args at amcl launch file!! -->
+    <arg name="map_file" default="$(find sd_navigation)/maps/turtlebot3_house.yaml"/>
+    <!-- Publish: /map, /map_metadata -->
+    <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)" />
 
     <!-- Add AMCL example for differential drive robots for Localization -->
     <!-- Subscribe: /soonduck/lidar/scan, /tf, /initialpose, /map -->
