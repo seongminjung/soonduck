@@ -60,6 +60,16 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        back_left_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        back_right_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         base_footprint:
           Alpha: 1
           Show Axes: false
@@ -68,11 +78,6 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        caster_wheel:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         chassis:
           Alpha: 1
           Show Axes: false
@@ -87,17 +92,17 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        left_wheel:
+        front_left_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        lidar:
+        front_right_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_wheel:
+        head_lidar:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -115,11 +120,13 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        back_left_wheel:
+          Value: true
+        back_right_wheel:
+          Value: true
         base_footprint:
           Value: true
         base_link:
-          Value: true
-        caster_wheel:
           Value: true
         chassis:
           Value: true
@@ -127,15 +134,15 @@ Visualization Manager:
           Value: true
         front_cam_link_optical:
           Value: true
-        left_wheel:
+        front_left_wheel:
           Value: true
-        lidar:
+        front_right_wheel:
+          Value: true
+        head_lidar:
           Value: true
         map:
           Value: true
         odom:
-          Value: true
-        right_wheel:
           Value: true
       Marker Alpha: 1
       Marker Scale: 1
@@ -146,21 +153,23 @@ Visualization Manager:
       Tree:
         map:
           odom:
-            base_link:
-              base_footprint:
-                {}
-              chassis:
-                caster_wheel:
+            base_footprint:
+              base_link:
+                back_left_wheel:
                   {}
-              front_cam_link:
-                front_cam_link_optical:
+                back_right_wheel:
                   {}
-              left_wheel:
-                {}
-              lidar:
-                {}
-              right_wheel:
-                {}
+                chassis:
+                  {}
+                front_cam_link:
+                  front_cam_link_optical:
+                    {}
+                front_left_wheel:
+                  {}
+                front_right_wheel:
+                  {}
+                head_lidar:
+                  {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -221,6 +230,46 @@ Visualization Manager:
       Unreliable: false
       Use Timestamp: false
       Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 25; 255; 0
+      Enabled: true
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Lines
+      Line Width: 0.029999999329447746
+      Name: Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Queue Size: 10
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic: /move_base/TrajectoryPlannerROS/global_plan
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz/Pose
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: Pose
+      Queue Size: 10
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Arrow
+      Topic: /move_base/current_goal
+      Unreliable: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -249,7 +298,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 5.304779052734375
+      Distance: 14.710567474365234
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -257,17 +306,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0.16269177198410034
-        Y: -0.21440279483795166
-        Z: -0.06415879726409912
+        X: 0.24521368741989136
+        Y: -0.28467515110969543
+        Z: -0.06415881216526031
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.48039889335632324
+      Pitch: 1.5697963237762451
       Target Frame: <Fixed Frame>
-      Yaw: 0.8653977513313293
+      Yaw: 0.00039768218994140625
     Saved: ~
 Window Geometry:
   Displays:
@@ -287,5 +336,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1200
-  X: 2620
-  Y: 141
+  X: 2925
+  Y: 219
