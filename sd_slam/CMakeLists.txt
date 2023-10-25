@@ -9,7 +9,6 @@ project(sd_slam)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   rospy
-  slam_toolbox
 )
 
 ## System dependencies are found with CMake's conventions

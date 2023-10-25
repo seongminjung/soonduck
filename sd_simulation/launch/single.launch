@@ -1,0 +1,13 @@
+<launch>
+    <arg name="robot_name"/>
+    <arg name="init_pose"/>
+
+    <!-- Spawn a robot into Gazebo -->
+    <node name="gazebo_spawn_model" pkg="gazebo_ros" type="spawn_model" args="-param /robot_description -urdf -model $(arg robot_name) $(arg init_pose)" />
+
+    <!-- Run the robot_state_publisher. -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" />
+
+    <!-- Run the keyboard driver -->
+    <node name="keyboard_driver_node" pkg="sd_keyboard_driver" type="keyboard_driver_node.py" output="screen" />
+</launch>

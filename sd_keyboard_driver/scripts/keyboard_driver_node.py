@@ -8,32 +8,6 @@ from pynput.keyboard import Key, KeyCode
 from geometry_msgs.msg import Twist
 
 
-# key bindings
-FORWARD = "w"
-BACKWARD = "s"
-LEFT = "a"
-RIGHT = "d"
-
-TOGGLE_BALL_TRACKING = "b"
-
-HELP = "p"
-
-HELP_MSG = """
-Use keyboard to control SoonDuck
-
-Key Bindings:
-   [w]
-[a][s][d]
-
-[w] = Forward
-[s] = Backward
-[a] = Left
-[d] = Right
-
-[b] = Toggle ball tracking
-
-[p] = Show this help"""
-
 LINEAR_ACCEL = 1.3
 LINEAR_DECEL = 1.8
 ANGULAR_ACCEL = 2.5
@@ -41,8 +15,14 @@ ANGULAR_DECEL = 3.0
 
 class KeyboardDriverNode():
     def __init__(self):
+        self.ns = rospy.get_namespace()
         self.cmd_vel_publisher = rospy.Publisher('cmd_vel', Twist, queue_size=10)
-        rospy.loginfo(HELP_MSG)
+
+        self.forward = rospy.get_param(self.ns + 'forward') # e.g. /robot1/forward
+        self.backward = rospy.get_param(self.ns + 'backward')
+        self.left = rospy.get_param(self.ns + 'left')
+        self.right = rospy.get_param(self.ns + 'right')
+
         self.des_vel = Twist()
         self.prev_msg = Twist()
         self.status = {
@@ -62,18 +42,14 @@ class KeyboardDriverNode():
             elif isinstance(key, Key):
                 key = key.name
 
-            if key == FORWARD:
+            if key == self.forward:
                 self.status["forward"] = 1
-            if key == BACKWARD:
+            if key == self.backward:
                 self.status["backward"] = 1
-            if key == LEFT:
+            if key == self.left:
                 self.status["left"] = 1
-            if key == RIGHT:
+            if key == self.right:
                 self.status["right"] = 1
-            if key == TOGGLE_BALL_TRACKING:
-                rospy.set_param('follow_ball/enable', not rospy.get_param('follow_ball/enable'))
-            if key == HELP:
-                rospy.loginfo(HELP_MSG)
 
             self.des_vel.linear.x = self.status["forward"] - self.status["backward"]
             self.des_vel.angular.z = self.status["left"] - self.status["right"]
@@ -92,13 +68,13 @@ class KeyboardDriverNode():
             elif isinstance(key, Key):
                 key = key.name
 
-            if key == FORWARD:
+            if key == self.forward:
                 self.status["forward"] = 0
-            if key == BACKWARD:
+            if key == self.backward:
                 self.status["backward"] = 0
-            if key == LEFT:
+            if key == self.left:
                 self.status["left"] = 0
-            if key == RIGHT:
+            if key == self.right:
                 self.status["right"] = 0
 
             self.des_vel.linear.x = self.status["forward"] - self.status["backward"]

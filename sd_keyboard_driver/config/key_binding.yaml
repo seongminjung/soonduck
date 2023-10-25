@@ -1,0 +1,11 @@
+robot1:
+  forward: w
+  backward: s
+  left: a
+  right: d
+
+robot2:
+  forward: up
+  backward: down
+  left: left
+  right: right

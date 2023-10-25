@@ -5,21 +5,9 @@
     <xacro:include filename="colors.xacro" />
 
     <xacro:include filename="body.xacro" />
-
-    <!-- Example Hokuyo Lidar -->
-    <!-- <xacro:include filename="$(find gazebo_plugins)/test/multi_robot_scenario/xacro/laser/hokuyo.xacro" />
-    <xacro:laser name="lidar" parent="base_link"
-        xyz="0 0 0.2" rpy="0 0 0" 
-        meshes="package://gazebo_plugins/test/multi_robot_scenario/meshes/laser" /> -->
     
     <xacro:include filename="lidar.xacro"/>
     <xacro:include filename="camera.xacro"/>
-
-    <!-- <xacro:if value="$(arg use_ros2_control)">
-        <xacro:include filename="ros_control.xacro" />
-    </xacro:if> -->
-    <!-- <xacro:unless value="$(arg use_ros2_control)"> -->
-        <xacro:include filename="gazebo_control.xacro" />
-    <!-- </xacro:unless> -->
+    <xacro:include filename="gazebo_control.xacro" />
     
 </robot>

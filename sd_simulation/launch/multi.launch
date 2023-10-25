@@ -1,0 +1,47 @@
+<launch>
+  <!-- The filename can be passed into the launch file to override the default. -->
+  <arg name="filename" default="soonduck.xacro" />
+  <arg name="file" default="$(find sd_simulation)/description/$(arg filename)" />
+  <param name="robot_description" command="$(find xacro)/xacro $(arg file)" />
+
+  <!-- keyboard driver -->
+  <rosparam file="$(find sd_keyboard_driver)/config/key_binding.yaml" />
+  <!-- <node name="r1_keyboard_driver_node" pkg="sd_keyboard_driver" type="r1_keyboard_driver_node.py" output="screen" /> -->
+
+  <!-- Run Gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="paused" value="false"/>
+      <arg name="use_sim_time" value="true"/>
+      <arg name="gui" value="true"/>
+      <arg name="recording" value="false"/>
+      <arg name="debug" value="false"/>
+      <arg name="world_name" value="$(find aws_robomaker_racetrack_world)/worlds/racetrack_day.world"/>
+  </include>
+
+  <!-- Spawn Pool -->
+  <arg name="poolfilename" default="pool.xacro" />
+  <arg name="poolfile" default="$(find sd_simulation)/description/$(arg poolfilename)" />
+  <param name="pool_description" command="$(find xacro)/xacro $(arg poolfile)" />
+  <node name="gazebo_spawn_model" pkg="gazebo_ros" type="spawn_model" args="-param /pool_description -urdf -model pool -z 15" />
+
+  <!-- BEGIN ROBOT 1-->
+  <group ns="robot1">
+    <param name="tf_prefix" value="robot1_tf" />
+    <include file="$(find sd_simulation)/launch/single.launch" >
+      <arg name="init_pose" value="-x 2.75 -y -14 -z 0.5" />
+      <arg name="robot_name" value="Robot1" />
+    </include>
+  </group>
+
+  <!-- BEGIN ROBOT 2-->
+  <group ns="robot2">
+    <param name="tf_prefix" value="robot2_tf" />
+    <include file="$(find sd_simulation)/launch/single.launch" >
+      <arg name="init_pose" value="-x 2.75 -y -15 -z 0.5" />
+      <arg name="robot_name" value="Robot2" />
+    </include>
+  </group>
+
+  <!-- laserscan to pointcloud -->
+  <node name="l2p" pkg="sd_simulation" type="l2p_node" />
+</launch>

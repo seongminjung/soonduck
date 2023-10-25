@@ -48,8 +48,8 @@
             </camera>
             <plugin name="front_cam" filename="libgazebo_ros_camera.so">
                 <frame_name>front_cam</frame_name>
-                <imageTopicName>/front_cam/image_raw</imageTopicName>
-                <cameraInfoTopicName>/front_cam/camera_info</cameraInfoTopicName>
+                <imageTopicName>front_cam/image_raw</imageTopicName>
+                <cameraInfoTopicName>front_cam/camera_info</cameraInfoTopicName>
             </plugin>
         </sensor>
         <!-- <sensor name="front_cam" type="camera">
